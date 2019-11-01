@@ -1,0 +1,140 @@
+<html>
+<body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<style>
+.foriframe {
+  width: 50vw;
+  height: 50vh;
+  overflow: scroll;
+}
+
+iframe {
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+.slidecontainer {
+  width: 100%;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+</style>
+
+<br>
+<form action="http://127.0.0.1:5000/adduserbeliev/" id="submituserbeliev" style="display: none;">
+<div style="text-align: center;">
+<div class="foriframe"  >
+ <iframe src="https://twitter.com/GOPLdrBrianKolb/status/1176577065291780097?s=20" style="width: 1000px; height: 600px;"></iframe> 
+ </div>
+ <br>
+ <div class="slidecontainer">
+ <input type="range" class="slider" name="beleive" >
+ </div>
+ <br>
+ <div class="slidecontainer">
+ <input type="range" class="slider" name="knowledge">
+ </div>
+ <br>
+ <div>
+ <input type="button" name="next" value="Next"></button>
+ </div>
+ </div> 
+</form>
+<form action="http://127.0.0.1:5000/adduserbeliev/" id="loginForm">
+  <input type="text" name="username" id="username" placeholder="User Name">
+  <input type="submit" value="Log in">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+ 
+<script>
+// Attach a submit handler to the form
+
+$( document ).ready(function() {
+	
+	
+	$( "#loginForm" ).submit(function( event ) {
+		 
+		  // Stop form from submitting normally
+		  event.preventDefault();
+		  var username_val=$("#username").val();
+		  
+		  $.ajax({
+		      type: "POST",
+		      url: "http://127.0.0.1:5000/getuser",
+		      crossDomain: true,
+		      data: 'username='+username_val,
+		      success: function (data) {
+		          // do something with server response data
+		          var lastid=data[0]["last_id"];
+		          $("#submituserbeliev").show();
+		          
+		      },
+		      error: function (err) {
+		      	alert(err)
+		          // handle your error logic here
+		      }
+		  });
+		  
+		  
+		}) ;	
+});
+ 
+</script>
+ </body>
+ 
+ 
+ 
+ 
+</html>
